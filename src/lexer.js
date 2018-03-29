@@ -6,9 +6,8 @@ function lex(input) {
 	lines.forEach(line => {
 		line = line.replace(/#.*/, "").trim(); //remove comments and excess whitespace on ends
 		if (line === "") return; //if the line is empty/is just a comment, move on to the next line
-		let tokenized = {};
 		//get command
-		tokenized.command = line.split(" ")[0];
+		let command = line.split(" ")[0];
 		//get parameters
 		line = line.split(" ");
 		line.shift();
@@ -25,11 +24,12 @@ function lex(input) {
 			} else if (param.startsWith("'") || param.startsWith('"')) {
 				type = "string";
 			} else {
-				type = "variable";
+				type = "expression";//can be something like `variable` or `5 + 10`
 			}
 			return {type, value: param};
 		});
-		console.log(tokenized);
+		tokenizedLines.push({command, parameters});
 	});
+	return tokenizedLines;
 }
 module.exports = lex;
