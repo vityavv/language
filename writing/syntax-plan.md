@@ -8,6 +8,7 @@ This is the plan for language's syntax
 ##### Anything marked with (!) will be changed when improvements are made
 ```
 print "string" # print something
+print 5 + 10, "hello " # params are seperated by commas
 var x = 5 # make x be 5
 var x = 10 # in this language, you must type var before any variable declaration, definition, and change
 if 5 == x then # if ... then ... fi
