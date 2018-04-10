@@ -8,8 +8,8 @@ function parseMathExpression(expression) {
 	expression = expression.replace(/\s+(?=[\+\*\/\-\(\)])/g, "");//remove all spaces after a (, ), +, -, *, or /
 	expression = expression.replace(/[A-Za-z_]+/, variable => vars[variable]);//replace all variables with their values
 	while (expression.match(/\*|\//g)) {//work through each multiplication and division and resolve them
-		expression.replace(/\d+[\*\/]\d+/, exp => {
-			if (expression.match(/\//)) {
+		expression = expression.replace(/[\d.]+[\*\/][\d.]+/, exp => {
+			if (exp.match(/\//)) {
 				let numbers = exp.split("/").map(Number);
 				return numbers[0] / numbers[1];
 			} else {
@@ -17,8 +17,6 @@ function parseMathExpression(expression) {
 				return numbers[0] * numbers[1];
 			}
 		});
-		console.log(expression);
 	}
-	console.log(expression);
 }
 module.exports = parseMathExpression;
