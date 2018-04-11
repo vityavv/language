@@ -1,6 +1,14 @@
-function parseMathExpression(expression, vars) {
-	expression = expression.replace(/(?<=[\+\*\/\-\(\)%])\s+/g, "");//remove all spaces before a (, ), +, -, *, %, or /
-	expression = expression.replace(/\s+(?=[\+\*\/\-\(\)%])/g, "");//remove all spaces after a (, ), +, -, *, %, or /
+function parseExpression(expression, vars) {
+	expression = expression.replace(/(?<=[\+\*\/\-\(\)%=!><])\s+/g, "");
+	//remove all spaces before a (, ), +, -, *, %, /, =, !, >, <
+	expression = expression.replace(/\s+(?=[\+\*\/\-\(\)%])/g, "");//remove all spaces after a char (above)
+	if (expression.match(/\s(?=(?:[^"]*"[^"]*")*[^"]*$)/g) && expression.match(/\s(?=(?:[^']*'[^']*')*[^']*$)/g)) {//thanks, stackoverflow
+		throw Error("You have a space outside of a string in your expression");
+	}
+}
+
+function parseMathExpression(expression, vars = {}) {
+	let original = expression;
 	expression = expression.replace(/[A-Za-z_]+/, variable => vars[variable]);//replace all variables with their values
 	while (expression.match(/(?<!\()\(.*?\)(?!\))/g)) {//work through each *single nested parentheses* and resolve it
 		expression = expression.replace(/(?<!\()\((.*?)\)(?!\))/g, (thing, exp) => {
