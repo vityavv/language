@@ -15,9 +15,7 @@ if 5 = x then # if ... then ... fi
 	print "x is 5" # indentation is *optional*
 fi
 # there are 2 types - number and string (! - add arrays?)
-# string + num = "<string><num>"
-# string + string = "<string><string>"
-# string / string or string - string or string * string = ERROR
+# STRINGS CAN NOT BE IN MATHEMATICAL EXPRESSIONS
 # string * num = that string repeated num times
 
 ```
