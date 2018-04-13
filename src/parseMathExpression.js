@@ -2,12 +2,12 @@ function parseMathExpression(expression, vars = {}) {
 	let original = expression;
 	expression = expression.trim();
 	expression = expression.replace(/[A-Za-z_]+/g, variable => vars[variable]);//replace all variables with their values
-	if (expression.match(/[^\d.\+\*\/\-\(\)%=!><]/g)) {
+	if (expression.match(/[^\d.\+\*\/\-\(\)%]/g)) {
 		throw new Error("Looks like you used a character that isn't allowed in a mathematical expression");
 	}
-	//remove spaces before and after the following: ()+-*%/=!><
-	expression = expression.replace(/(?<=[\+\*\/\-\(\)%=!><])\s+/g, "");
-	expression = expression.replace(/\s+(?=[\+\*\/\-\(\)%=!><])/g, "");
+	//remove spaces before and after the following: ()+-*%/
+	expression = expression.replace(/(?<=[\+\*\/\-\(\)%])\s+/g, "");
+	expression = expression.replace(/\s+(?=[\+\*\/\-\(\)%])/g, "");
 	//error handling!
 	if (expression.match(/[\+\*\/\-\(\)%=!><]$|^[\+\*\/\-\(\)%=!><]/g)) {
 		throw new Error("Looks like you ended your expression on a symbol, which is not allowed");
