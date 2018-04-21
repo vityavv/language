@@ -4,27 +4,45 @@ function lex(input) {
 	let tokenizedLines = [];//new empty array of tokenized lines
 	//for each line
 	lines.forEach(line => {
-		line = line.replace(/#.*/, "").trim(); //remove comments and excess whitespace on ends
+		let index = line.match(/#(?=([^"']*["'][^"']*['"])*[^"']*$)/);//match a comment not in quotes
+		if (index) {
+			index = index.index;
+			line = line.substring(index, 0) //remove comments
+		}
+		line = line.trim();//remove excess whitespace on ends
 		if (line === "") return; //if the line is empty/is just a comment, move on to the next line
+		//Error handling!
+		if ((line.match(/'(?=([^"]*"[^"]*")*[^"]*$)/g) || []).length % 2 === 1) {
+			throw Error("You have an unmatched single quote!");
+		}
+		if ((line.match(/"(?=([^\']*\'[^\']*\')*[^\']*$)/g || [])).length % 2 === 1) {
+			throw Error("You have an unmatched double quote!");
+		}
 		//get command
 		let command = line.split(" ")[0];
 		//get parameters
 		line = line.split(" ");
 		line.shift();
 		line = line.join(" ");
-		//thanks la_grib#1010 on discord (discord.gg/code) for this regex
-		parameters = line.match(/(?<=, ?|^)('[^']*'|"[^"]*"|[^\s,][^,]*)(?=,|$)/g);
+		parameters = line.match(/('|").*?\1|[^\s,][^,]*/g);//thanks to a boi in sunglasses#7006 from discord.gg/code for this regex
 		parameters = parameters.map(el => el.trim());
 		//turn parameters into tokens of parameters (show the type)
 		parameters = parameters.map(param => {
-			let type = "";
+			let type = "expression";
 			if (Number(param)) {
 				type = "number";
 				param = Number(param);
-			} else if (param.startsWith("'") || param.startsWith('"')) {
-				type = "string";
 			} else {
-				type = "expression";//can be something like `variable` or `5 + 10`
+				['"', "'"].forEach(quote => {
+					if (param.startsWith(quote)) {
+						if (param.endsWith(quote)) {
+							type = "string";
+							param = param.substring(1, param.length - 1);
+						} else {
+							throw Error("One of your parameters has a string and then something else!");
+						}
+					}
+				});
 			}
 			return {type, value: param};
 		});
