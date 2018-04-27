@@ -1,8 +1,11 @@
 let parseMathExpression = require("./parseMathExpression");
 let varsAndFuncs = require("./varsAndFuncs");
 function interpret(tokenized) {
+	varsAndFuncs.intInfo.lines = tokenized
 	for (let index = 0; index < tokenized.length; index++) {
 		let line = tokenized[index];
+		varsAndFuncs.intInfo.line = line;
+		varsAndFuncs.intInfo.index = index;
 		line.parameters = line.parameters.map(param => {
 			if (param.type === "expression")
 				return {value: parseMathExpression(param.value, varsAndFuncs.vars), type: "number"}
