@@ -12,10 +12,10 @@ function lex(input) {
 		line = line.trim();//remove excess whitespace on ends
 		if (line === "") return; //if the line is empty/is just a comment, move on to the next line
 		//Error handling!
-		if ((line.match(/'(?=([^"]*"[^"]*")*[^"]*$)/g) || []).length % 2 === 1) {
+		if ((line.match(/'(?=([^"]*"[^"]*")*[^"]*$)/g) || [1,2]).length % 2 === 1) {
 			throw Error("You have an unmatched single quote!");
 		}
-		if ((line.match(/"(?=([^\']*\'[^\']*\')*[^\']*$)/g || [])).length % 2 === 1) {
+		if ((line.match(/"(?=([^\']*\'[^\']*\')*[^\']*$)/g || [1,2])).length % 2 === 1) {
 			throw Error("You have an unmatched double quote!");
 		}
 		//get command
