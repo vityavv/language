@@ -15,7 +15,7 @@ function lex(input) {
 		if ((line.match(/'(?=([^"]*"[^"]*")*[^"]*$)/g) || [1,2]).length % 2 === 1) {
 			throw Error("You have an unmatched single quote!");
 		}
-		if ((line.match(/"(?=([^\']*\'[^\']*\')*[^\']*$)/g || [1,2])).length % 2 === 1) {
+		if ((line.match(/"(?=([^\']*\'[^\']*\')*[^\']*$)/g) || []).length % 2 === 1) {
 			throw Error("You have an unmatched double quote!");
 		}
 		//get command
@@ -32,6 +32,8 @@ function lex(input) {
 			if (Number(param)) {
 				type = "number";
 				param = Number(param);
+			} else if (param.match(/^[A-Za-z_]+$/)) {
+				type = "variable";
 			} else {
 				['"', "'"].forEach(quote => {
 					if (param.startsWith(quote)) {

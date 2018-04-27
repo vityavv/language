@@ -1,21 +1,20 @@
 let parseMathExpression = require("./parseMathExpression.js");
 let nativeAndVars = {
 	funcs: {
-		variable: function(variablename, value) {
-			if (arguments.length !== 2) throw Error(`Expected 2 argument for variable, got ${arguments.length} or less`);
-			if (variablename.type !== "string") throw Error(`Expected variablename to be a string, got a ${variablename.type} instead`);
-			if (value.type === "expression") {
-				value.value = parseMathExpression(value.value, nativeAndVars.vars);
-				value.type = "number";
-			}
-			nativeAndVars.vars[variablename.value] = {value: value.value, type: value.type};
+		if: function(first, exp, last) {
+			
+		},
+		variable: function(variablename, value, ...args) {
+			if (arguments.length !== 2) throw Error(`Exected 2 arguments, got ${arguments.length} instead`);
+			if (variablename.type !== "string") throw Error(`Expected variable name to be string, got ${variablename.type} instead`);
+			nativeAndVars.vars[variablename.value] = {...value};
 		},
 		"var": this.variable,
 		print: function(...args) {
-			args = args.map(el => el.type === "expression" ? parseMathExpression(el.value, nativeAndVars.vars) : el.value);
-			console.log(...args);
+			console.log(...args.map(el => el.value));
 		},
 	},
-	vars: {}
+	vars: {},
+	intInfo: {}
 };
 module.exports = nativeAndVars;
