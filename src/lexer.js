@@ -15,7 +15,7 @@ function lex(input) {
 		if ((line.match(/'(?=([^"]*"[^"]*")*[^"]*$)/g) || []).length % 2 === 1) {
 			throw Error("You have an unmatched single quote!");
 		}
-		if ((line.match(/"(?=([^\']*\'[^\']*\')*[^\']*$)/g || [])).length % 2 === 1) {
+		if ((line.match(/"(?=([^\']*\'[^\']*\')*[^\']*$)/g) || []).length % 2 === 1) {
 			throw Error("You have an unmatched double quote!");
 		}
 		//get command
