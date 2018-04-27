@@ -4,7 +4,7 @@ let nativeAndVars = {
 		variable: function(variablename, value, ...args) {
 			if (arguments.length !== 2) throw Error(`Exected 2 arguments, got ${arguments.length} instead`);
 			if (variablename.type !== "string") throw Error(`Expected variable name to be string, got ${variablename.type} instead`);
-			nativeAndVars.vars[variablename.value] = value.value;
+			nativeAndVars.vars[variablename.value] = {...value};
 		},
 		"var": this.variable,
 		print: function(...args) {

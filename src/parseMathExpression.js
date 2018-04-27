@@ -1,5 +1,4 @@
 function parseMathExpression(expression, vars = {}) {
-	let original = expression;
 	expression = expression.trim();
 	//remove spaces before and after the following: ()+-*%/
 	expression = expression.replace(/(?<=[\+\*\/\-\(\)%])\s+/g, "");

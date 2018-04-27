@@ -32,6 +32,8 @@ function lex(input) {
 			if (Number(param)) {
 				type = "number";
 				param = Number(param);
+			} else if (param.match(/^[A-Za-z_]+$/)) {
+				type = "variable";
 			} else {
 				['"', "'"].forEach(quote => {
 					if (param.startsWith(quote)) {
