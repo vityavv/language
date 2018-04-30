@@ -1,8 +1,11 @@
 let parseMathExpression = require("./parseMathExpression.js");
+let parseEqExpression = require("./parseEqExpression.js");
 let nativeAndVars = {
 	funcs: {
-		if: function(first, exp, last) {
-			
+		if: function(...args) {
+			if (!parseEqExpression(...args)) {
+				for (let i = 0; i < intInfo.lines.length; i++)
+			}
 		},
 		variable: function(variablename, value, ...args) {
 			if (arguments.length !== 2) throw Error(`Exected 2 arguments, got ${arguments.length} instead`);
