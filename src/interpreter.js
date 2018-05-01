@@ -17,6 +17,7 @@ function interpret(tokenized) {
 		});
 		if (varsAndFuncs.funcs[line.command]) varsAndFuncs.funcs[line.command](...line.parameters);
 		else throw Error(`There's no function with the name ${line.command}`);
+		index = varsAndFuncs.intInfo.index;
 	}
 }
 module.exports = interpret;

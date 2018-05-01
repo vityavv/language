@@ -25,29 +25,35 @@ function lex(input) {
 		line.shift();
 		line = line.join(" ");
 		parameters = line.match(/('|").*?\1|[^\s,][^,]*/g);//thanks to a boi in sunglasses#7006 from discord.gg/code for this regex
-		parameters = parameters.map(el => el.trim());
-		//turn parameters into tokens of parameters (show the type)
-		parameters = parameters.map(param => {
-			let type = "expression";
-			if (Number(param)) {
-				type = "number";
-				param = Number(param);
-			} else if (param.match(/^[A-Za-z_]+$/)) {
-				type = "variable";
-			} else {
-				['"', "'"].forEach(quote => {
-					if (param.startsWith(quote)) {
-						if (param.endsWith(quote)) {
-							type = "string";
-							param = param.substring(1, param.length - 1);
-						} else {
-							throw Error("One of your parameters has a string and then something else!");
+		if (parameters) {
+			parameters = parameters.map(el => el.trim());
+			//turn parameters into tokens of parameters (show the type)
+			parameters = parameters.map(param => {
+				let type = "expression";
+				if (Number(param)) {
+					type = "number";
+					param = Number(param);
+				} else if (param.match(/^(>|<|>=|=>|<=|=<|!=|=!|==|and|or)$/)) {
+					type = "eqexpression";//this is to prevent it from bein parsed by the math parser
+				} else if (param.match(/^[A-Za-z_]+$/)) {
+					type = "variable";
+				} else {
+					['"', "'"].forEach(quote => {
+						if (param.startsWith(quote)) {
+							if (param.endsWith(quote)) {
+								type = "string";
+								param = param.substring(1, param.length - 1);
+							} else {
+								throw Error("One of your parameters has a string and then something else!");
+							}
 						}
-					}
-				});
-			}
-			return {type, value: param};
-		});
+					});
+				}
+				return {type, value: param};
+			});
+		} else {
+			parameters = [];
+		}
 		tokenizedLines.push({command, parameters});
 	});
 	return tokenizedLines;

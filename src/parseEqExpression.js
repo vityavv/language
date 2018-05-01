@@ -2,8 +2,10 @@ function parseSingle(first, exp, last) {
 	if (first.type !== last.type) throw Error(`Can't compare ${first.type} with ${last.type}`);
 	if (exp === "==") return first === last;
 	if (first.type !== "number") throw Error(`Can't compare ${first.type}s other than for equality`);
+	if (exp.type !== "eqexpression") throw Error(`${exp.type} is not a valid operation!`);
 	first = first.value;
 	last = last.value;
+	exp = exp.value;
 	switch (exp) {
 		case ">":
 			return first > last;
@@ -24,10 +26,12 @@ function parseSingle(first, exp, last) {
 			return first !== last;
 			break;
 		default:
-			throw Error(`${exp} is not a valid operation!`);
+			throw Error(`${exp} is not a valid operation!`);//just in case
 	}
 }
 function parseAndEtc(first, exp, last) {
+	if (exp.type !== "eqexpression") throw Error(`${exp.type} is not a valid operation!`);
+	exp = exp.value;
 	if (first.length === 3) first = parseSingle(...first);
 	if (exp === "and") return first && parseSingle(...last);
 	if (exp === "or") return first || parseSingle(...last);
