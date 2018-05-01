@@ -3,7 +3,7 @@ let varsAndFuncs = require("./varsAndFuncs");
 function interpret(tokenized) {
 	varsAndFuncs.intInfo.lines = tokenized;
 	for (let index = 0; index < tokenized.length; index++) {
-		let line = tokenized[index];
+		let line = Object.assign({}, tokenized[index]);
 		varsAndFuncs.intInfo.line = line;
 		varsAndFuncs.intInfo.index = index;
 		line.parameters = line.parameters.map(param => {

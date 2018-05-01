@@ -3,7 +3,11 @@ function parseMathExpression(expression, vars = {}) {
 	//remove spaces before and after the following: ()+-*%/
 	expression = expression.replace(/(?<=[\+\*\/\-\(\)%])\s+/g, "");
 	expression = expression.replace(/\s+(?=[\+\*\/\-\(\)%])/g, "");
-	expression = expression.replace(/[A-Za-z_]+/g, variable => vars[variable]);//replace all variables with their values
+	expression = expression.replace(/[A-Za-z_]+/g, variable => {
+		if (!vars[variable]) throw Error(`${variable} is undefined!`);
+		if (vars[variable].type !== "number") throw Error(`You can't put ${vars[variable].type}s into mathematical expressions!`);
+		return vars[variable].value;
+	});//replace all variables with their values
 	if (expression.match(/[^\d.\+\*\/\-\(\)%]/g)) {
 		throw new Error("Looks like you used a character that isn't allowed in a mathematical expression");
 	}
