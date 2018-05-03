@@ -1,0 +1,22 @@
+{
+  "name": "language",
+  "version": "1.0.0",
+  "description": "A programming languaeg",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/vityavv/language.git"
+  },
+  "author": "Victor Veytsman",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/vityavv/language/issues"
+  },
+  "homepage": "https://github.com/vityavv/language#readme",
+  "dependencies": {
+    "readline-sync": "^1.4.9"
+  }
+}
