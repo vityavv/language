@@ -1,5 +1,6 @@
 let parseMathExpression = require("./parseMathExpression.js");
 let parseEqExpression = require("./parseEqExpression.js");
+let rl = require("readline-sync");
 let nativeAndVars = {
 	funcs: {
 		if: function(...args) {
@@ -28,6 +29,13 @@ let nativeAndVars = {
 		print: function(...args) {
 			console.log(...args.map(el => el.value));
 		},
+		input: function(variablename, prompt = {value: `${variablename ? variablename.value : "error"}=`}) {
+			if (arguments.length > 2) throw Error(`Expected one or two arguments, got ${arguments.length} instead`);
+			if (!variablename) throw Error(`No variable name provided`);
+			if (variablename.type !== "string") throw Error(`Expected variable name to be string, got ${variablename.type} instead`);
+			inputted = rl.question(prompt.value);
+			nativeAndVars.vars[variablename.value] = {value: Number(inputted) || inputted, type: Number(inputted) ? "number" : "string"};
+		}
 	},
 	vars: {},
 	intInfo: {}
