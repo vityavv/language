@@ -33,7 +33,7 @@ These are the steps that the computer takes to run the program
 	3. If the command that the line calls exists, then it calls it with the parameters. Otherwise, it errors.
 
 ### Parsing Mathematical Expressions - [parseMathExpression.js](../src/parseMathExpression.js)
-These are the steps that teh computer takes to parse math expressions
+These are the steps that the computer takes to parse math expressions
 1. Remove un-necessary whitespace on the ends (this was left over from testing days but I keep it in just in case)
 2. Remove spaces before and after the special characters that we keep. This set is `()+=*%`.
 3. Replace each variable name with it's value (if the variable isn't a number, it errors, and if the variable doesn't exist, it errors as well)
@@ -43,3 +43,28 @@ These are the steps that teh computer takes to parse math expressions
 7. It goes through each multiplication, division, and modulo operator and resolves it. Modulo is just the remainder you get after a devision (e.g. `5 % 2` is `1`)
 8. It goes through each addition and subtraction and resolves it.
 9. It returns the result.
+
+### Native Functions - [varsAndFuncs.js](../src/varsAndFuncs.js)
+The native functions are all in a file together, seperated by a special structure:
+```js
+{
+	funcs: {
+		//here is where I put the functions
+	},
+	vars: {
+		//this is where the computer puts the variables while your program is being run
+	},
+	intInfo: {
+		//this is where the interpreter puts it's information so that functions can manipulate it
+	}
+}
+```
+The list of functions goes as follows:
+1. Print - This function simply takes the value of each argument and prints it using javascript's `console.log` method.
+2. Variable - This function takes the variable name and value and adds a variable into the list.
+3. Input and Inputnum - These functions take input using the `readline-sync` module, and put them into the provided variable. Input uses the `question` method and Inputnum uses the `questionFloat` method, the difference being that the num method gets a number and the other one gets a string
+4. If - parses the expression given, and if it's true it continues execution, but if it's false, it changes the intInfo to skip ahead to the next `fi`, the closing command.
+5. Fi - Doesn't do anything.
+6. While - parses the expression given, and if it's true it continues execution, but if it's false, it changes the intInfo to skip ahead past the next `elihw`, the closing command.
+7. Elihw - unlike fi, this does something. It finds the previous while, and jumps to it. If the previous while is false, then it'll just jump past the elihw, preventing an infinite loop.
+A note about 3, and 4 and 6---of course I don't rewrite the extremely similar code. I put this code in a function and then run that instead. These functions are not exposed to the world, though

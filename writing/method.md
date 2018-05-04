@@ -24,7 +24,7 @@ and it translates that code into something that looks like this:
 	]},
 	{command: "print", parameters: [
 		{value: 7, type: "number"}
-	]),
+	]},
 	{command: "fi", parameters: []}
 ]
 ```

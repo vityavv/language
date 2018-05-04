@@ -20,7 +20,7 @@ let nativeAndVars = {
 			if (i < 0) throw Error(`Congradulations! You broke something! Submit a bug fix: https://github.com/vityavv/lanugage`);
 			nativeAndVars.intInfo.index = i-1;
 		},
-		variable: function(variablename, value, ...args) {
+		variable: function(variablename, value) {
 			if (arguments.length !== 2) throw Error(`Exected 2 arguments, got ${arguments.length} instead`);
 			if (variablename.type !== "string") throw Error(`Expected variable name to be string, got ${variablename.type} instead`);
 			nativeAndVars.vars[variablename.value] = {...value};
