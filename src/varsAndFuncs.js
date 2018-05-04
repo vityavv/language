@@ -30,16 +30,22 @@ let nativeAndVars = {
 			console.log(...args.map(el => el.value));
 		},
 		input: function(variablename, prompt = {value: `${variablename ? variablename.value : "error"}=`}) {
+				if (arguments.length > 2) throw Error(`Expected one or two arguments, got ${arguments.length} instead`);
+				input(variablename, prompt, false);
+		},
+		inputnum: function(variablename, prompt = {value: `${variablename ? variablename.value : "error"}=`}) {
 			if (arguments.length > 2) throw Error(`Expected one or two arguments, got ${arguments.length} instead`);
-			if (!variablename) throw Error(`No variable name provided`);
-			if (variablename.type !== "string") throw Error(`Expected variable name to be string, got ${variablename.type} instead`);
-			inputted = rl.question(prompt.value);
-			nativeAndVars.vars[variablename.value] = {value: Number(inputted) || inputted, type: Number(inputted) ? "number" : "string"};
+			input(variablename, prompt, true);
 		}
 	},
 	vars: {},
 	intInfo: {}
 };
+function input(variablename, prompt = {value: `${variablename ? variablename.value : "error"}=`}, int) {
+	if (!variablename) throw Error(`No variable name provided`);
+	if (variablename.type !== "string") throw Error(`Expected variable name to be string, got ${variablename.type} instead`);
+	nativeAndVars.vars[variablename.value] = {value: int ? rl.questionFloat(prompt.value) : rl.question(prompt.value), type: int ? "number" : "string"};
+}
 function check(toFind, toMatch, args) {
 	if (!parseEqExpression(...args)) {
 		let i;
