@@ -27,7 +27,10 @@ cd language
 npm install
 ```
 3. Write your program (more below)
-4. TODO: FINISH
+4. In the directory that you installed it to, type `./run path/to/file`. For example, if you put your program on your desktop, *on bash (linux/macOS)* you would do
+```
+./run ~/Desktop/file.lang
+```
 
 ## Usage
 

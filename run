@@ -1,0 +1,11 @@
+#!/usr/bin/env node
+let interpret = require("./src/interpreter");
+let lex = require("./src/lexer");
+let fs = require("fs");
+let path = require("path");
+process.argv.slice(2).forEach(el => {
+	fs.readFile(el, (err, program) => {
+		if (err) throw err;
+		interpret(lex(program.toString()));
+	});
+});
