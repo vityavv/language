@@ -12,12 +12,18 @@ function lex(input) {
 		line = line.trim();//remove excess whitespace on ends
 		if (line === "") return; //if the line is empty/is just a comment, move on to the next line
 		//Error handling!
-		if ((line.match(/'(?=([^"]*"[^"]*")*[^"]*$)/g) || [1,2]).length % 2 === 1) {
-			throw Error("You have an unmatched single quote!");
+		let inSingle = false;
+		let inDouble = false;
+		for (let i = 0; i < line.length; i++) {
+			if (!inDouble) {
+				if (line.split("")[i] === "'") inSingle = !inSingle;
+			}
+			if (!inSingle) {
+				if (line.split("")[i] === '"') inDouble = !inDouble;
+			}
 		}
-		if ((line.match(/"(?=([^\']*\'[^\']*\')*[^\']*$)/g) || []).length % 2 === 1) {
-			throw Error("You have an unmatched double quote!");
-		}
+		if (inSingle) throw Error("You have an unmatched single quote!");
+		if (inDouble) throw Error("You have an unmatched double quote!");
 		//get command
 		let command = line.split(" ")[0];
 		//get parameters

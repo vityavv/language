@@ -1,7 +1,8 @@
 function parseSingle(first, exp, last) {
 	if (first.type !== last.type) throw Error(`Can't compare ${first.type} with ${last.type}`);
 	if (exp.type !== "eqexpression") throw Error(`${exp.type}s are not valid operations!`);
-	if (exp.value === "==") return first === last;
+	if (exp.value === "==") return first.value === last.value;
+	if (exp.value === "!=" || exp.value === "=!") return first.value !== last.value;
 	if (first.type !== "number") throw Error(`Can't compare ${first.type}s other than for equality`);
 	first = first.value;
 	last = last.value;
