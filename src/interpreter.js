@@ -10,10 +10,10 @@ function interpret(tokenized) {
 			if (param.type === "expression")
 				return {value: parseMathExpression(param.value, varsAndFuncs.vars), type: "number"}
 			else if (param.type === "variable") {
-				if (varsAndFuncs.vars[param.value])
-					return {...varsAndFuncs.vars[param.value]};
+				if (varsAndFuncs.vars[param.value]) return {...varsAndFuncs.vars[param.value]};
 				else throw Error(`${param.value} is not defined`);
-			} else return param;
+			}
+			else return param;
 		});
 		if (varsAndFuncs.funcs[line.command]) varsAndFuncs.funcs[line.command](...line.parameters);
 		else throw Error(`There's no function with the name ${line.command}`);
