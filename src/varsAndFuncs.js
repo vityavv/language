@@ -12,7 +12,7 @@ let varsAndFuncs = {
 						if (parseEqExpression(...parseParams(...varsAndFuncs.intInfo.lines[i].parameters))) break;
 					}
 				}
-				if (i >= varsAndFuncs.intInfo.lines.length) throw Error(`Unmatched if statement on line ${varsAndFuncs.intInfo.index + 1}`);
+				if (i >= varsAndFuncs.intInfo.lines.length) throw Error(`Unmatched if statement`);
 				varsAndFuncs.intInfo.index = i;
 			}
 		},
@@ -71,7 +71,7 @@ function check(toFind, toMatch) {
 			break;
 		}
 	}
-	if (i >= varsAndFuncs.intInfo.lines.length) throw Error(`Unmatched ${toMatch} statement on line ${varsAndFuncs.intInfo.index + 1}`);
+	if (i >= varsAndFuncs.intInfo.lines.length) throw Error(`Unmatched ${toMatch} statement`);
 	varsAndFuncs.intInfo.index = i;
 }
 function parseParams(...parameters) {

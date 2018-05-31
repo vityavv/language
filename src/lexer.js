@@ -3,7 +3,7 @@ function lex(input) {
 	let lines = input.split("\n");
 	let tokenizedLines = [];//new empty array of tokenized lines
 	//for each line
-	lines.forEach(line => {
+	lines.forEach((line, index) => {
 		let index = line.match(/#(?=([^"']*["'][^"']*['"])*[^"']*$)/);//match a comment not in quotes
 		if (index) {
 			index = index.index;
@@ -22,8 +22,8 @@ function lex(input) {
 				if (line.split("")[i] === '"') inDouble = !inDouble;
 			}
 		}
-		if (inSingle) throw Error("You have an unmatched single quote!");
-		if (inDouble) throw Error("You have an unmatched double quote!");
+		if (inSingle) throw Error(`You have an unmatched single quote! (line ${index})`);
+		if (inDouble) throw Error(`You have an unmatched double quote! (line ${index})`);
 		//get command
 		let command = line.split(" ")[0];
 		//get parameters
@@ -50,7 +50,7 @@ function lex(input) {
 								type = "string";
 								param = param.substring(1, param.length - 1);
 							} else {
-								throw Error("One of your parameters has a string and then something else!");
+								throw Error(`One of your parameters has a string and then something else! (line ${index})`);
 							}
 						}
 					});
