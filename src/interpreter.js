@@ -14,11 +14,11 @@ function interpret(tokenized) {
 						type: "number"
 					};
 				} catch (error) {
-					throw Error(error + ` (line ${index})`);
+					throw Error(error + ` (line ${index + 1})`);
 				}
 			} else if (param.type === "variable") {
 				if (varsAndFuncs.vars[param.value]) return {...varsAndFuncs.vars[param.value]};
-				else throw Error(`${param.value} is not defined (line ${index}`);
+				else throw Error(`${param.value} is not defined (line ${index + 1})`);
 			}
 			else return param;
 		});
@@ -26,10 +26,10 @@ function interpret(tokenized) {
 			try {
 				varsAndFuncs.funcs[line.command](...line.parameters);
 			} catch (error) {
-				throw Error(error + ` (line ${index})`);
+				throw Error(error + ` (line ${index + 1})`);
 			}
 		}
-		else throw Error(`There's no function with the name ${line.command} (line ${index})`);
+		else throw Error(`There's no function with the name ${line.command} (line ${index + 1})`);
 		index = varsAndFuncs.intInfo.index;
 	}
 }
