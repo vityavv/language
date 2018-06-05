@@ -56,6 +56,9 @@ The native functions are all in a file together, seperated by a special structur
 	},
 	intInfo: {
 		//this is where the interpreter puts it's information so that functions can manipulate it
+	},
+	blockStack: [
+		//this is where I put information about what block of code I'm in (e.g. if statements and while loops)
 	}
 }
 ```
@@ -63,8 +66,14 @@ The list of functions goes as follows:
 1. Print - This function simply takes the value of each argument and prints it using javascript's `console.log` method.
 2. Variable - This function takes the variable name and value and adds a variable into the list.
 3. Input and Inputnum - These functions take input using the `readline-sync` module, and put them into the provided variable. Input uses the `question` method and Inputnum uses the `questionFloat` method, the difference being that the num method gets a number and the other one gets a string
-4. If - parses the expression given, and if it's true it continues execution, but if it's false, it changes the intInfo to skip ahead to the next `fi`, the closing command.
-5. Fi - Doesn't do anything.
-6. While - parses the expression given, and if it's true it continues execution, but if it's false, it changes the intInfo to skip ahead past the next `elihw`, the closing command.
-7. Elihw - unlike fi, this does something. It finds the previous while, and jumps to it. If the previous while is false, then it'll just jump past the elihw, preventing an infinite loop.
-A note about 3, and 4 and 6---of course I don't rewrite the extremely similar code. I put this code in a function and then run that instead. These functions are not exposed to the world, though
+4. If - parses the expression given, and if it's true it continues execution, but if it's false, it...
+	1. Scans for the next elif statement. If the conditions in it evaluate to true, it resumes execution at the elif. If not, it does this again and again until there are no elifs left. Then, it...
+	2. Scans for an else statement. If there is one, it goes to the else statement. Otherwise, it just goes to the fi, and picks up from there.
+	3. Not really a thing it does, but while it does all of these things it keeps a record of what block it is scanning through so that it doesn't mess up with nested blocks of code, and it also does a bunch of error checking.
+5. Elif - Skips to the next fi. When the if statement finds the right elif, it starts execution *after* it, so it's safe for the next elif to skip to the end. This uses ta similar process to the if statement so a lot of error checking is involved.
+6. Else - Same as elif
+7. Fi - Doesn't do anything.
+8. While - parses the expression given, and if it's true it continues execution, but if it's false, it changes the intInfo to skip ahead past the next `elihw`, the closing command. This uses a similar process to the if statement so a lot of error checking is involved.
+9. Elihw - unlike fi, this does something. It finds the previous while, and jumps to it. If the previous while is false, then it'll just jump past the elihw, preventing an infinite loop.
+
+A note about 3, and 4 through 8---of course I don't rewrite the extremely similar code. I put this code in a function and then run that instead. These functions are not exposed to the world, though

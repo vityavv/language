@@ -1,0 +1,13 @@
+variable "number", 1
+while number, <=, 30
+	if number % 3, ==, 0, and, number % 5, ==, 0 #the modulo operator finds the remainder after a division
+		print "FizzBuzz"
+	elif number % 3, ==, 0
+		print "Fizz"
+	elif number % 5, ==, 0
+		print "Buzz"
+	else
+		print number
+	fi
+	variable "number", number + 1
+elihw

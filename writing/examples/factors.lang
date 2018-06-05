@@ -1,0 +1,9 @@
+print "This program shows the factors of a given number"
+inputnum "number", "Enter a number: "
+variable "numtotest", 1
+while numtotest, <=, number
+	if number % numtotest, ==, 0
+		print numtotest
+	fi
+	variable "numtotest", numtotest + 1
+elihw

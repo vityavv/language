@@ -7,6 +7,8 @@
 	* [input](#input)
 	* [inputnum](#inputnum)
 	* [if](#if)
+	* [elif](#elif)
+	* [else](#else)
 	* [fi](#fi)
 	* [while](#while)
 	* [elihw](#elihw)
@@ -80,27 +82,28 @@ print "Your starting number plus five:", start + 5
 ```
 
 ### if
-This command takes an unlimited number of arguments and evaluates them. If they evaluate to true then the code continues. However, if they evaluate to false, it skips to the next `fi` command. Not providing a `fi` command results in an error.
+### elif
+### else
+This command takes an unlimited number of arguments and evaluates them. If they evaluate to true then the code continues. However, if they evaluate to false, the program looks for the next `elif` statement. For each `elif` statement, it checks if the condition given is true. If it is, then it does the code in the `elif` statement, and goes to the end of the block. If it doesn't, it moves on to the next `elif` statement. If there are no elif statements, or none of the conditions given in the elif statements evaluate to true, the program searches for the next `else` statement. You cannot have more than one else statement for every if block. The code in the `else` statement executes, if one is given, and then it goes to the `fi`.
+
+To elaborate: `elif` and `else` statements are *completely optional*, however you must include a `fi` statement to end your block.
 ```
-if 5, ==, 5
-	print "Everything is okay!"
-	inputnum "num", "Input a number greater than five"
-	if num, <=, 5
-		print "You put a number that was less than five!"
-	fi
-	if num, >, 5
-		print "That's great! Next question"
-	fi
-	inputnum "numtwo", "Input a number less than five"
-	if num, >, 5, and, numtwo, <, 5
-		print "You're an honest person!"
-	fi
+input "command", "Enter a command: "
+if command, ==, "hi"
+	print "Your command was hi. I like that command"
+elif command, ==, "orange"
+	print "I really love oranges, thanks"
+elif command, ==, "apple"
+	print "I do not like apples, and I do not like you"
+else
+	print "I don't know anything about that..."
 fi
 ```
-Here's an example that shows different ways you can use if statements. You can use `>=`, `<=`, `>`, `<`, `==`, `!=`, to evaluate numbers, and then `and` or `or` to combine different evaluations. You can also use `==` on strings.
+
+Here's an example that shows different ways you can use if statements. You can use `>=`, `<=`, `>`, `<`, `==`, `!=`, to evaluate numbers, and then `and` or `or` to combine different evaluations. You can also use `==` or `!=` on strings.
 
 ### fi
-See if. This does nothing.
+See if. This ends an if block.
 
 ### while
 See if to see how expressions are parsed. The difference between this and if lies in the partner function, `elihw`. It skips past `elihw` if the expression given evaluates to false, but if it doesn't it just keeps going.
