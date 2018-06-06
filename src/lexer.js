@@ -22,8 +22,8 @@ function lex(input) {
 				if (line.split("")[i] === '"') inDouble = !inDouble;
 			}
 		}
-		if (inSingle) throw Error(`You have an unmatched single quote! (line ${ind})`);
-		if (inDouble) throw Error(`You have an unmatched double quote! (line ${ind})`);
+		if (inSingle) throw Error(`You have an unmatched single quote! (line ${ind + 1})`);
+		if (inDouble) throw Error(`You have an unmatched double quote! (line ${ind + 1})`);
 		//get command
 		let command = line.split(" ")[0];
 		//get parameters
