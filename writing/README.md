@@ -16,5 +16,5 @@ I made a 3 videos on how to setup and use this programming language, and how it 
 Links are *coming soon*
 
 1. [How to Setup and Run Programs](https://youtu.be/ATXOapaueAk) - 7:53
-2. [How to Make Programs] - 15:42
-3. [How it All Works] - 16:03
+2. [How to Make Programs](https://youtu.be/Rm1Sj1TRqb4) - 15:42
+3. [How it All Works](https://youtu.be/081bQSG5jCU) - 16:03
